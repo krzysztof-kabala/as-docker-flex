@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  mysql:
+    image: mariadb
+    container_name: mysql.{projectname}.app
+    stdin_open: true
+    tty: true
+    networks:
+      - global
+    env_file:
+       - ./docker/mysql/config.env
+    volumes:
+       - ~/data/mysql.{projectname}.app:/var/lib/mysql
+    restart: always
+
+  php:
+    image: amsdard.io/{projectname}/php:1.0
+    container_name: php.{projectname}.app
+    networks:
+      - global
+    stdin_open: true
+    tty: true
+    env_file:
+       - ./docker/php/config.env
+    links:
+       - mysql
+    restart: always
+
+  nginx:
+    image: amsdard.io/{projectname}/nginx:1.0
+    container_name: nginx.{projectname}.app
+    networks:
+      - global
+    stdin_open: true
+    tty: true
+    labels:
+       traefik.frontend.rule: "Host:{subdomain}.{projectname}.app,{projectname}.app"
+    links:
+       - php
+    restart: always
+
+networks:
+  global:
+    external: true
