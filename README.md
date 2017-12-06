@@ -1,6 +1,6 @@
-AS docker - Symfony Flex
+AS docker - Symfony (flex)
 ========================
-implement Docker into Your Symfony project
+implement Docker into Your Symfony (^3.4) project
 
 
 Requirements
@@ -20,12 +20,15 @@ composer require amsdard/symfony-as-docker
 * see Your new local README.md
 
 
-Full example
+Install - Full sample
 ---
 ```
-composer create-project symfony/skeleton my-project
+composer create-project symfony/skeleton my_project
+composer require annotations validator encore translator security
 composer require amsdard/symfony-as-docker
 ./vendor/amsdard/symfony-as-docker/install.sh
+
+yake yarn install
 yake configure
 yake up
 ```
@@ -54,3 +57,4 @@ How it works
     └── php
         └── Dockerfile
 ```
+* Your project directory name will be filled as local domain name and docker image namespace (see `docker-compose.yml`)
