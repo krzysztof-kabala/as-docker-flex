@@ -8,48 +8,49 @@ Requirements
  * configure Your local [projects enrironment](https://bitbucket.org/as-docker/projects-environment)
  * [optional] install composer globally [global composer command](https://hub.docker.com/r/amsdard/composer/)
  * make sure You have [YAKE](https://yake.amsdard.io/) installed
+ * fresh symfony skeleton ^3.4
 
 
-Create project
----
-* git only way
-```
-git clone git@github.com:amsdard/symfony-standard.git project-name
-# cd to project directory
-yake composer install
-```
-* global `composer` way
-```
-composer create-project amsdard/symfony-standard project-name
-```
-
-
-First project install
+Install
 ---
 ```
-yake configure-docker
-# configure each "./docker/*/config.env"
-yake up
-yake console assetic:watch   # run in background
+composer require amsdard/symfony-as-docker
+./vendor/amsdard/symfony-as-docker/install.sh
 ```
-* directory name `project-name` will become Your domain name: `project-name.app` and Your container's image tag namespace
-* remove YAKE `configure-docker` task from `Yakefile`
-* update `composer.json` by Your project name, description
-* do not use `require-dev` in composer.json (keep common vendors)
-* if You want to use local composer (based on PHP image) - RECOMMENDED:
-```
-curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar
-```
-and replace YAKE *composer* task by:
-```
-composer: $BIN php ./composer.phar --optimize-autoloader $CMD
-```
-* run `yake console assetic:watch` in background to work with assets
-* `yake console assetic:dump --env=prod --no-debug` before deploy
+* see Your new local README.md
 
 
 Full example
 ---
 ```
+composer create-project symfony/skeleton my-project
+composer require amsdard/symfony-as-docker
+./vendor/amsdard/symfony-as-docker/install.sh
+yake configure
+yake up
+```
 
+
+How it works
+---
+* below file structure will be installed
+```
+.
+├── README.md
+├── docker-compose.yml
+├── Yakefile
+├── deploy
+│   ├── prod
+│   │   └── docker-compose.yml
+│   └── rancher
+│       └── docker-compose.yml
+└── docker
+    ├── mysql
+    │   ├── config.env
+    │   └── config.env.dist
+    ├── nginx
+    │   ├── Dockerfile
+    │   └── default.conf
+    └── php
+        └── Dockerfile
 ```

@@ -1,10 +1,6 @@
 php: docker-compose exec php entrypoint php $CMD
 console: $BIN php ./bin/console -e=$ENV $CMD
-composer: "docker run --rm -it
-          -v ~/.ssh:/home/php/.ssh
-          -v $(pwd):/opt
-          -v ~/.docker-composer:/home/php/.composer
-          amsdard/composer composer --ignore-platform-reqs --optimize-autoloader $CMD"
+composer: $BIN php ./composer.phar --optimize-autoloader $CMD
 nodejs: "docker run -it --rm -w /usr/src/app
       -v $(pwd):/usr/src/app -v ~/.docker-node-cache:/home/node/cache -v ~/.ssh:/home/node/.ssh
       amsdard/node $CMD"
@@ -16,43 +12,36 @@ bower: $BIN node bower $CMD
 grunt: $BIN node grunt $CMD
 gulp: $BIN node gulp $CMD
 
-# Build & push to hub.amsdard.io, ie: `yake push php`
-push:
-  - $BIN build $CMD
-  - docker-compose push $CMD
+# symfony aliases
+encore: $BIN yarn run encore $CMD
 
 # Up project.
 up:
   - docker-compose up -d --force-recreate $CMD
 
-# Starts all project containers.
-start: docker-compose start $CMD
-
-# build container `yake build php`
-build: docker-compose build $CMD
-
-# Stops all project containers.
-stop: docker-compose stop $CMD
+# Deletes all project containers.
+down: docker-compose down -v --rmi=all $CMD
 
 # List all project containers.
 ps: docker-compose ps $CMD
 
-# Deletes all project containers.
-down: docker-compose down -v --rmi=all $CMD
+# build container `yake build php`
+build: docker-compose build $CMD
+
+# prepare & build & push to hub.amsdard.io, ie: `yake deploy php`
+deploy:
+  - $BIN encore production
+  - $BIN build $CMD
+  - docker-compose push $CMD
 
 # Seeds database with sample user and site - for one time use per deployment.
 populate:
 
 # Fresh installation process - to be run one time
 configure:
-
-configure-docker:
-   - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose.yml
-   - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./deploy/rancher/docker-compose.yml
-   - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./deploy/prod/docker-compose.yml
+   - curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar
 
 # default values
 _config:
   FORCE_ALL: 1
   ENV: dev
-  PROJECTNAME: ${PWD##*/}

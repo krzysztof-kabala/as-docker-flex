@@ -1,18 +1,19 @@
 version: '2'
 services:
   nginx:
-    image: amsdard.io/{projectname}/nginx:dev
+    image: amsdard.io/{name}/nginx:1.0
     stdin_open: true
     tty: true
     links:
     - php:php
+    - redis:redis
     labels:
       traefik.enable: 'true'
       traefik.domain: app.amsdard.io
       io.rancher.container.pull_image: always
-      traefik.alias: {projectname}
+      traefik.alias: {name}
   php:
-    image: amsdard.io/{projectname}/php:dev
+    image: amsdard.io/{name}/php:1.0
     environment:
     stdin_open: true
     tty: true
@@ -25,7 +26,9 @@ services:
     environment:
     stdin_open: true
     volumes:
-    - {projectname}-mysql-var-lib-mysql:/var/lib/mysql
+    - {name}-mysql-var-lib-mysql:/var/lib/mysql
     tty: true
-    labels:
-      io.rancher.container.pull_image: always
+  redis:
+    image: redis:alpine
+    stdin_open: true
+    tty: true
