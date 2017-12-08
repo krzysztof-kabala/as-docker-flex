@@ -17,6 +17,7 @@ encore: $BIN yarn run encore $CMD
 
 # Up project.
 up:
+  - docker-compose pull --parallel --quiet
   - docker-compose up -d --force-recreate $CMD
 
 # Deletes all project containers.
@@ -26,7 +27,7 @@ down: docker-compose down -v --rmi=all $CMD
 ps: docker-compose ps $CMD
 
 # build container `yake build php`
-build: docker-compose build $CMD
+build: docker-compose build --pull $CMD
 
 # prepare & build & push to hub.amsdard.io, ie: `yake deploy php`
 deploy:

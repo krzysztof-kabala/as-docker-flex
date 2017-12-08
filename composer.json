@@ -1,3 +1,8 @@
 {
-    "name": "krzysztof-kabala/as-docker-flex"
+    "name": "krzysztof-kabala/as-docker-flex",
+    "scripts": {
+        "post-package-install": [
+            "./vendor/amsdard/symfony-as-docker/install.sh"
+        ]
+    }
 }

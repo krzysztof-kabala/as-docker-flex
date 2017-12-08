@@ -9,12 +9,12 @@ PROJECT_NAME=${PWD##*/}
 
 ## install once only
 if [[ -f "$PROJECT_DIR/docker-compose.yml" ]]; then
-    printf "You have as-docker installed!"
-    exit 1;
+    exit 0;
 fi;
 
 ## copy files
 scp -rp "$VENDOR_DIR/files/deploy" "$PROJECT_DIR/deploy"
+scp -rp "$VENDOR_DIR/files/docker" "$PROJECT_DIR/docker"
 scp -rp "$VENDOR_DIR/files/Yakefile" "$PROJECT_DIR/"
 scp -rp "$VENDOR_DIR/files/docker-compose.yml" "$PROJECT_DIR/"
 scp -rp "$VENDOR_DIR/files/README.md" "$PROJECT_DIR/"
@@ -25,6 +25,5 @@ perl -pi -w -e "s/{name}/$PROJECT_NAME/g" "$PROJECT_DIR/docker-compose.yml"
 perl -pi -w -e "s/{name}/$PROJECT_NAME/g" "$PROJECT_DIR/deploy/rancher/docker-compose.yml"
 perl -pi -w -e "s/{name}/$PROJECT_NAME/g" "$PROJECT_DIR/deploy/prod/docker-compose.yml"
 
-## final alert
-printf "as-docker installed!\n\n"
-printf "See [doc] for more details\n"
+## complete .gitignore
+echo $'\n###< as-docker-flex ###\n/docker/*/*.env\n/composer.phar\n###> as-docker-flex ###' >> "$PROJECT_DIR/.gitignore"
