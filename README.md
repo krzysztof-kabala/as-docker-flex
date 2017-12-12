@@ -8,13 +8,14 @@ Requirements
  * configure Your local [projects enrironment](https://bitbucket.org/as-docker/projects-environment)
  * [optional] install composer globally [global composer command](https://hub.docker.com/r/amsdard/composer/)
  * make sure You have [YAKE](https://yake.amsdard.io/) installed
- * fresh symfony skeleton ^4.0
+ * symfony ^4.0 with flex and basic components (see Full sample) installed
 
 
 Install
 ---
 ```
 composer require amsdard/symfony-as-docker
+./vendor/amsdard/symfony-as-docker/setup
 ```
 * see Your new local README.md
 
@@ -33,12 +34,13 @@ composer config extra.symfony.allow-contrib true
 
 install basic Symfony components
 ```
-composer require annotations validator encore translator security debug-pack make
+composer require annotations validator encore asset translator security debug-pack make
 ```
 
 install as-docker
 ```
 composer require amsdard/symfony-as-docker
+./vendor/amsdard/symfony-as-docker/setup
 ```
 
 run the project

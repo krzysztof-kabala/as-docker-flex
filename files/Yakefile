@@ -17,7 +17,6 @@ encore: $BIN yarn run encore $CMD
 
 # Up project.
 up:
-  - docker-compose pull --parallel --quiet
   - docker-compose up -d --force-recreate $CMD
 
 # Deletes all project containers.

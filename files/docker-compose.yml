@@ -57,7 +57,7 @@ services:
     labels:
        traefik.frontend.rule: "Host:{subdomain}.{name}.app,{name}.app"
     volumes:
-       - ./web:/opt/web:cached
+       - ./public:/opt/public:cached
        - ./docker/nginx/:/etc/nginx/conf.d:cached
     links:
        - php

@@ -16,7 +16,7 @@ Run project
 yake configure
 yake up
 ```
-* run `yake encore dev --watch` in background to work with assets
+* run `yake encore dev --watch` (or `yake npm run watch`) in background to work with assets
 * make sure `{name}.app` domain is routed to Your localhost
 
 
@@ -39,8 +39,8 @@ yake deploy nginx
 Deploy (prod)
 ---
 ```
-yake push php
-yake push nginx
+yake deploy php
+yake deploy nginx
 ```
 * import `./deploy/prod/docker-compose.yml` into server + copy ENV files from `docker` directory
 * `docker-compose pull --parallel --quiet`

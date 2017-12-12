@@ -26,4 +26,4 @@ perl -pi -w -e "s/{name}/$PROJECT_NAME/g" "$PROJECT_DIR/deploy/rancher/docker-co
 perl -pi -w -e "s/{name}/$PROJECT_NAME/g" "$PROJECT_DIR/deploy/prod/docker-compose.yml"
 
 ## complete .gitignore
-echo $'\n###< as-docker-flex ###\n/docker/*/*.env\n/composer.phar\n###> as-docker-flex ###' >> "$PROJECT_DIR/.gitignore"
+echo $'\n###> as-docker-flex ###\n/docker/*/*.env\n/composer.phar\n###< as-docker-flex ###' >> "$PROJECT_DIR/.gitignore"
