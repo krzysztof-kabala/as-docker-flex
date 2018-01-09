@@ -1,5 +1,5 @@
 
-###> as-docker-flex ###
+###> amsdard/symfony-as-docker ###
 /docker/*/*.env
 /composer.phar
-###< as-docker-flex ###
+###< amsdard/symfony-as-docker ###
