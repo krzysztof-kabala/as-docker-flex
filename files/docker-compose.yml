@@ -3,7 +3,7 @@ version: '3'
 services:
   redis:
     image: redis:alpine
-    container_name: redis.{name}.app
+    container_name: redis.{name}.test
     stdin_open: true
     tty: true
     networks:
@@ -12,7 +12,7 @@ services:
 
   mysql:
     image: mariadb
-    container_name: mysql.{name}.app
+    container_name: mysql.{name}.test
     stdin_open: true
     tty: true
     networks:
@@ -20,12 +20,12 @@ services:
     env_file:
        - ./docker/mysql/config.env
     volumes:
-       - ~/data/mysql.{name}.app:/var/lib/mysql
+       - ~/data/mysql.{name}.test:/var/lib/mysql
     restart: always
 
   php:
     image: amsdard.io/{name}/php:1.0
-    container_name: php.{name}.app
+    container_name: php.{name}.test
     build:
         context: ./
         dockerfile: ./docker/php/Dockerfile
@@ -46,7 +46,7 @@ services:
 
   nginx:
     image: amsdard.io/{name}/nginx:1.0
-    container_name: nginx.{name}.app
+    container_name: nginx.{name}.test
     build:
         context: ./
         dockerfile: ./docker/nginx/Dockerfile
@@ -55,7 +55,7 @@ services:
     stdin_open: true
     tty: true
     labels:
-       traefik.frontend.rule: "Host:{subdomain}.{name}.app,{name}.app"
+       traefik.frontend.rule: "Host:{subdomain}.{name}.test,{name}.test"
     volumes:
        - ./public:/opt/public:cached
        - ./docker/nginx/:/etc/nginx/conf.d:cached
