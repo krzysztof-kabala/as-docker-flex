@@ -13,10 +13,25 @@ Requirements
 
 Install
 ---
+Download package by composer (or git clone to Your `~/Projects` directory)
 ```
 composer require amsdard/symfony-as-docker
+```
+
+ * php+nginx mode (default)
+```
 ./vendor/amsdard/symfony-as-docker/setup
 ```
+
+ * apache mode
+```
+./vendor/amsdard/symfony-as-docker/setup apache
+```
+in case of `apache` mode, You may also need:
+```
+composer require symfony/apache-pack
+```
+
 * see Your new local README.md
 
 
